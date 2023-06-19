@@ -3,7 +3,6 @@ package com.yedam.book;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class BookMain {
 
 	public static void main(String[] args) {
@@ -11,10 +10,9 @@ public class BookMain {
 		int selectNo = 0;
 		BookDao dao = new BookDao();
 		BookLogin login = new BookLogin();
-		
+
 		login.loginCheck();
-		
-		
+
 		if (login.getLoginId().equals("admin")) {
 			while (true) {
 				System.out.println("==============도서관리시스템==============");
@@ -56,17 +54,18 @@ public class BookMain {
 				} else if (selectNo == 2) {
 					System.out.print("조회할 책 번호입력 =>");
 					int num = sc.nextInt();
-
-					;
 					if (dao.search(num)) {
-						System.out.println("조회된 책이 없습니다.");
+
 					} else {
-						
+						System.out.println("조회된 책이 없습니다.");
 					}
 				} else if (selectNo == 3) {
+					BookVO book = new BookVO();
+
 					System.out.print("수정할 책번호 =>");
 					int num = sc.nextInt();
 					sc.nextLine();
+					
 					System.out.print("책이름 수정 =>");
 					String title = sc.nextLine();
 					System.out.print("책저자 수정 =>");
@@ -76,7 +75,6 @@ public class BookMain {
 					System.out.print("출간일 수정(ex:20010505) =>");
 					String date = sc.nextLine();
 
-					BookVO book = new BookVO();
 					book.setBookNum(num);
 					book.setBookTitle(title);
 					book.setBookAuthor(author);
@@ -88,6 +86,7 @@ public class BookMain {
 					} else {
 						System.out.println("수정실패");
 					}
+
 				} else if (selectNo == 4) {
 					System.out.print("삭제할 책번호 =>");
 					int num = sc.nextInt();
@@ -124,8 +123,8 @@ public class BookMain {
 				if (selectNo == 1) {
 					System.out.print("조회할 책 번호입력 =>");
 					int num = sc.nextInt();
-					
-					if(!dao.search(num)) {
+
+					if (!dao.search(num)) {
 						System.out.println("조회된 책이 없습니다.");
 					}
 				} else if (selectNo == 2) {
@@ -142,9 +141,9 @@ public class BookMain {
 					System.out.print("대출할 책번호 =>");
 					int num = sc.nextInt();
 					sc.nextLine();
-					
+
 					String userid = login.getLoginId();
-					
+
 					BookVO book = new BookVO();
 					book.setBookNum(num);
 
@@ -160,10 +159,10 @@ public class BookMain {
 
 					BookVO book = new BookVO();
 					book.setBookNum(num);
-					
+
 					String userid = login.getLoginId();
-					
-					if(dao.returnbook(book, userid)) {
+
+					if (dao.returnbook(book, userid)) {
 						System.out.println("반납완료");
 					} else {
 						System.out.println("반납실패");

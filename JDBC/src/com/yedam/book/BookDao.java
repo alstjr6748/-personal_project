@@ -14,9 +14,8 @@ public class BookDao {
 	PreparedStatement psmt;
 	ResultSet rs;
 	String sql;
-	int check = 0;
-
-	public boolean insertDate(BookVO book) {
+	
+	public boolean insertDate(BookVO book) {			//등록
 		sql = "insert into tbl_books(book_num, book_title, book_author, book_content, book_date) values( ? , ? , ? , ? , nvl(?, sysdate))";
 		conn = Dao.getConnect();
 
@@ -45,9 +44,9 @@ public class BookDao {
 		return false;
 	}
 
-	public boolean search(int bookNum) {
-		sql = "select * from tbl_books where book_num = ?";
-		String sql1 = "select user_id from tbl_users where book_num = ?";
+	public boolean search(int bookNum) {			//조회
+		sql = "select * from tbl_books where book_num = ?";					//tbl_books 테이블의 데이터를 검색
+		String sql1 = "select user_id from tbl_users where book_num = ?";	//입력한 book_num을 tbl_usres 테이블에서 찾아서 같은 book_num을 가지고있는 user_id를 검색
 		conn = Dao.getConnect();
 
 		try {
@@ -75,16 +74,16 @@ public class BookDao {
 			StringBuilder sb = new StringBuilder();
 			while (rs2.next()) {
 				String tmp = rs2.getString(1);
-
-				sb.append(tmp + " ");
+				sb.append(tmp + " ");				//대여중인 사람이 여러 명이면 옆에 나오게 표현.
 			}
 			id = sb.toString();
-
-			System.out.printf("책번호 : %d | 책제목 : %s | 책저자 : %s | 책소개 : %s | 출간일 : %s | 대여중인 사람 : %s | 재고 : %d\n",
-					book.getBookNum(), book.getBookTitle(), book.getBookAuthor(), book.getBookContent(),
-					book.getBookDate(), id, book.getBookCnt());
-			// id = "user2 user3 ";
-			return true;
+			if (bookNum == book.getBookNum()) {
+				System.out.printf("책번호 : %d | 책제목 : %s | 책저자 : %s | 책소개 : %s | 출간일 : %s | 대여중인 사람 : %s | 재고 : %d\n",
+						book.getBookNum(), book.getBookTitle(), book.getBookAuthor(), book.getBookContent(),
+						book.getBookDate(), id, book.getBookCnt());
+				return true;
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -98,11 +97,11 @@ public class BookDao {
 		return false;
 	}
 
-	public boolean modify(BookVO book) {
-		sql = "update tbl_books set book_title = nvl(?, book_title),"
+	public boolean modify(BookVO book) {				//수정
+		sql = "update tbl_books set book_title = nvl(?, book_title),"			
 				+ "                 book_author = nvl(?, book_author),"
 				+ "                 book_content = nvl(?, book_content),"
-				+ "                 book_date  = nvl(?, book_date)" + "where book_num = ?";
+				+ "                 book_date  = nvl(?, book_date) where book_num = ?";
 		conn = Dao.getConnect();
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -129,7 +128,7 @@ public class BookDao {
 		return false;
 	}
 
-	public boolean delete(int bookNum) {
+	public boolean delete(int bookNum) {		//삭제
 		sql = "delete from tbl_books where book_num = ?";
 		conn = Dao.getConnect();
 
@@ -154,9 +153,10 @@ public class BookDao {
 		return false;
 	}
 
-	public List<BookVO> list() {
+	public List<BookVO> list() {			//목록
 		List<BookVO> list = new ArrayList<>();
 		sql = "select * from tbl_books";
+		
 		conn = Dao.getConnect();
 
 		try {
@@ -183,14 +183,14 @@ public class BookDao {
 
 		return list;
 	}
-
+	
+	
 	public boolean loan(BookVO book, String user_id) {
-		sql = "update tbl_books set book_cnt = book_cnt-1 \r\n"
-				+ "where book_num = nvl2(( select book_num  \r\n"
-				+ "                  from  tbl_users\r\n"
-				+ "                  where user_id = ?),null,?)";
-		String sql2 = "select book_cnt from tbl_books where book_num = ?";
-		String uSql = "update tbl_users set book_num = ? where user_id = ?";
+		sql = "update tbl_books set book_cnt = book_cnt-1 \r\n" + "where book_num = nvl2(( select book_num  \r\n"
+				+ "                  from  tbl_users\r\n" + "                  where user_id = ?),null,?)";
+				//도서대출을 하면 nvl2로 로그인한 사람의 num이 null이면 null로 아니면 입력한 num으로 값을 바꿔주고 재고에서 수량을 1개 줄여준다
+		String sql2 = "select book_cnt from tbl_books where book_num = ?";		//입력한 num값을 tbl_books테이블에서 찾아서 cnt컬럼을 가져온다.
+		String uSql = "update tbl_users set book_num = ? where user_id = ?";	//대출을 하면 tbl_users에 book_num값을 대입해준다. 
 		conn = Dao.getConnect();
 
 		PreparedStatement psmt2;
@@ -204,7 +204,7 @@ public class BookDao {
 
 			psmt2 = conn.prepareStatement(sql2);
 			psmt2.setInt(1, book.getBookNum());
-			rs2 = psmt2.executeQuery();
+			rs2 = psmt2.executeQuery();				//ResultSet에 쿼리실행 값들을 넣는다.
 
 			psmt3 = conn.prepareStatement(uSql);
 			psmt3.setInt(1, book.getBookNum());
@@ -213,23 +213,25 @@ public class BookDao {
 			while (rs2.next()) {
 				int a = rs2.getInt(1);
 
-				if (a > 0) {						//cnt 가 0보다 클때 밑으로 내려간다
+				if (a > 0) { // cnt 가 0보다 클때 밑으로 내려간다
 					int r = psmt.executeUpdate();
-						if (r > 0) {				
-							psmt3.executeUpdate();
-							return true;
-						}
+					if (r > 0) {
+						psmt3.executeUpdate();
+						return true;
 					}
 				}
-		}catch(SQLException e){
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
+
 	public boolean returnbook(BookVO book, String user_id) {
-		sql = "update tbl_books set book_cnt = book_cnt+1 where book_num  = ( select book_num from  tbl_users where user_id = ?)";
-		String sql2 = "select book_cnt from tbl_books where book_num = ?";
-		String uSql = "update tbl_users set book_num = null where user_id = ?";
+		sql = "update tbl_books set book_cnt = book_cnt+1 where book_num  = ( select book_num from  tbl_users where user_id = ? and book_num = ?)";
+				//반납을하면 로그인한 id에서 num을 서브쿼리로 가져와서 일치하는 num값을 재고에서 수량을 늘려준다
+		String sql2 = "select book_cnt from tbl_books where book_num = ?";		//입력한 num값을 tbl_books테이블에서 찾아서 cnt컬럼을 가져온다.
+		String uSql = "update tbl_users set book_num = null where user_id = ?";	//로그인한 유저의 num값을 null로 바꿔준다.
 		conn = Dao.getConnect();
 
 		PreparedStatement psmt2;
@@ -239,6 +241,7 @@ public class BookDao {
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, user_id);
+			psmt.setInt(2, book.getBookNum());
 
 			psmt2 = conn.prepareStatement(sql2);
 			psmt2.setInt(1, book.getBookNum());
@@ -288,5 +291,7 @@ public class BookDao {
 		}
 		return false;
 	}
+
+
 
 }
