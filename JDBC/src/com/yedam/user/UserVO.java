@@ -15,5 +15,5 @@ public class UserVO {
 	private String userPhone;
 	private String userAddr;
 	private int book_num;
-	
+	private String loan;
 }

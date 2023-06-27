@@ -3,6 +3,8 @@ package com.yedam.book;
 import java.util.List;
 import java.util.Scanner;
 
+import com.yedam.user.UserVO;
+
 public class BookMain {
 
 	public static void main(String[] args) {
@@ -15,8 +17,8 @@ public class BookMain {
 
 		if (login.getLoginId().equals("admin")) {
 			while (true) {
-				System.out.println("==============도서관리시스템==============");
-				System.out.print("1.등록 2.조회 3.수정 4.삭제 5.목록 6.종료 =>");
+				System.out.println("==================도서관리시스템==================");
+				System.out.print("1.등록 2.조회 3.수정 4.삭제 5.책목록 6.유저목록 7.종료 =>");
 				selectNo = sc.nextInt();
 				if (selectNo == 1) {
 					System.out.println("책번호 입력(3자리만 허용) *필수");
@@ -110,14 +112,21 @@ public class BookMain {
 									book.getBookCnt());
 						}
 					}
-				} else if (selectNo == 6) {
+				}else if (selectNo == 6) {
+					List<UserVO> list = dao.userList();
+					for(UserVO user : list) {
+						System.out.printf("아이디 : %s | 비밀번호 : %s | 이름 : %s | 대출한 책 : %d | 빌린 시간 : %s\n", user.getUserId(),user.getUserPw(),
+								user.getUserName(),user.getBook_num(),user.getLoan());
+					}
+					
+				}else if (selectNo == 7) {
 					System.out.println("프로그램이 종료됩니다.");
 					break;
 				}
 			}
 		} else {
 			while (true) {
-				System.out.println("==============도서관리시스템==============");
+				System.out.println("===========도서관리시스템===========");
 				System.out.print("1.조회 2.목록 3.대출 4.반납 5.종료 =>");
 				selectNo = sc.nextInt();
 				if (selectNo == 1) {

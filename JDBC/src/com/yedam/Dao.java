@@ -4,7 +4,7 @@ import java.sql.*;
 
 // db접속 Connection 반환
 public class Dao {
-	static String url = "jdbc:oracle:thin:@localhost:1521/xe";
+	static String url = "jdbc:oracle:thin:@13.125.195.9:1521/xe";
 	static String user = "proj";
 	static String pass = "proj";
 	static Connection conn;

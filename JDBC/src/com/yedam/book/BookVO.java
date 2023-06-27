@@ -14,4 +14,5 @@ public class BookVO {
 	private String BookContent;
 	private String BookDate;
 	private int BookCnt;
+	private int maxSize;
 }
