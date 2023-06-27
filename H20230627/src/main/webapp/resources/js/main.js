@@ -29,7 +29,8 @@ for(let val of ary){
 	ulTag.appendChild(liTag);
 	//button.
 	let btn = document.createElement('button');
-	
+	liTag.appendChild(btn);
+
 }
 console.log(ulTag);
 
