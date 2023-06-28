@@ -11,11 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.yedam.common.Control;
+import com.yedam.member.control.CalendarControl;
 import com.yedam.member.control.ChartDataControl;
 import com.yedam.member.control.ChartFormControl;
 import com.yedam.member.control.LoginControl;
 import com.yedam.member.control.LoginFormControl;
+import com.yedam.member.control.MemberInfoControl;
 import com.yedam.member.control.MemberListControl;
+import com.yedam.member.control.MemberModifyControl;
+import com.yedam.member.control.imageUploadControl;
 
 public class FrontController extends HttpServlet {
 	private HashMap<String, Control> menu;
@@ -31,14 +35,19 @@ public class FrontController extends HttpServlet {
 		menu.put("/memberList.do", new MemberListControl());
 		menu.put("/loginForm.do", new LoginFormControl());
 		menu.put("/login.do", new LoginControl());
+		menu.put("/memberInfo.do", new MemberInfoControl());
+		menu.put("/memberModify.do", new MemberModifyControl());
+		menu.put("/imageUpload.do", new imageUploadControl());
 
 		// chart
 		menu.put("/chartForm.do", new ChartFormControl());
 		menu.put("/chartData.do", new ChartDataControl());
+		menu.put("/calendar.do", new CalendarControl());
 	}
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
 		String uri = req.getRequestURI();
 		String contextPath = req.getContextPath();
 		String page = uri.substring(contextPath.length());

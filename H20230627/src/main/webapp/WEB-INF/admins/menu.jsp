@@ -20,6 +20,7 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="memberList.do">회원목록</a>
                             <a class="nav-link" href="#">회원상세보기</a>
+                            <a class="nav-link" href="#">달력보기</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"

@@ -31,7 +31,13 @@
 	<update id="update" parameterType="Member">
 		update tbl_users
 		set user_phone = #{userPhone},
-		    user_addr = #{userAddr}
+		    user_addr = #{userAddr},
+		    user_pw   = #{userPw}
+		where user_id = #{userId}
+	</update>
+	<update id="updateImage" parameterType="Member">
+		update tbl_users
+		set   user_img = #{userImg}
 		where user_id = #{userId}
 	</update>
 </mapper>

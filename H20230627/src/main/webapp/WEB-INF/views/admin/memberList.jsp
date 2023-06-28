@@ -22,15 +22,17 @@
 				<c:out value="${member.userName }" />
 			</td>
 			<td>
-				<fmt:formatDate pattern="yyyy-MM-dd" value="${member.userBirth }"/> 
+				<fmt:formatDate pattern="yyyy-MM-dd" value="${member.userBirth }"/>
 			</td>
 			<td>
 				<c:out value="${member.userPhone }" />
 			</td>
 			<td>
-				<img src="images/${member.userImg }" width="30px"/>
+				<a href="memberInfo.do?uid=${member.userId }">
+					<img src="images/${member.userImg }" width="30px"/>
+				</a>
 			</td>
-			
+
 		</tr>
 	</c:forEach>
 </tbody>
