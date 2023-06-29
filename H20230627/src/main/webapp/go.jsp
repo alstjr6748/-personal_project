@@ -7,7 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<input type="text" id="serach">
+	시도: <select id="serach">
+
+		 </select>
 	<button id="searchBtn">조회</button>
 
 	<div id="show">
@@ -41,14 +43,37 @@
 			for(let i = 0; i < data.data.length; i++){
 				tbody.appendChild(makeRow(data.data[i]));
 			}
+			let sidoAry = [];
+
+			for(let sido of sidoAry){
+				//<option value="서울특별시">서울특별시</option>
+				let opt = document.createElement('option');
+				opt.value = sido;
+				opt.innerText = sidoAry[i];
+				document.getElementById('search').appendChild(opt);
+			}
+			console.log(sidoAry);
 		}
+		// sido 정보 => sidoAry
+		// totalData = > [{},{},{},{}...{}]
+
+
 		let fields = ['id', 'centerName', 'phoneNumber', 'sido', 'zipCode'];
 		function makeRow(obj={}){
 			let tr = document.createElement('tr');
 			for(let field of fields){
 				let td = document.createElement('td');
-				td.innerText = obj[field];
-				tr.appendChild(td);
+				if(field == 'centerName'){
+					let ahref = document.createElement('a');
+					ahref.setAttribute('href', 'map.jsp?lat=' + obj.lat + '&lng=' + obj.lng + '&name=' + obj.centerName);
+					ahref.target = "_blank";
+					ahref.innerText = obj[field];
+					td.appendChild(ahref);
+					tr.appendChild(td);
+				} else {
+					td.innerText = obj[field];
+					tr.appendChild(td);
+				}
 			}
 			return tr;
 		}

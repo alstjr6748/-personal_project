@@ -36,4 +36,29 @@
 	</tbody>
 </table>
 
-<script src="resources/js/main4.js"></script>
+<style>
+div.outer{
+	display:inline-block;
+	width:700px;
+	height:500px;
+	background-color:yellow;
+}
+.outer span{
+	display:inline-block;
+	width:80px;
+	height:30px;
+	margin:2px;
+	padding:2px;
+	background-color:aquamarine;
+	text-align: center;
+}
+</style>
+
+<input type="text" id="userInput" /><br><br>
+
+<div class="outer">
+	<span>Hello</span>
+</div>
+
+
+<script src="resources/js/main5.js"></script>

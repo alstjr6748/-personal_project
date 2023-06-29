@@ -10,6 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yedam.board.control.BoardDetailControl;
+import com.yedam.board.control.BoardListControl;
+import com.yedam.calendar.control.AddEventControl;
+import com.yedam.calendar.control.EventForm;
+import com.yedam.calendar.control.EventListControl;
+import com.yedam.calendar.control.RemoveEventControl;
 import com.yedam.common.Control;
 import com.yedam.member.control.CalendarControl;
 import com.yedam.member.control.ChartDataControl;
@@ -43,6 +49,16 @@ public class FrontController extends HttpServlet {
 		menu.put("/chartForm.do", new ChartFormControl());
 		menu.put("/chartData.do", new ChartDataControl());
 		menu.put("/calendar.do", new CalendarControl());
+
+		// Calendar
+		menu.put("/eventForm.do", new EventForm());
+		menu.put("/eventList.do", new EventListControl());
+		menu.put("/addEvent.do", new AddEventControl());
+		menu.put("/removeEvent.do", new RemoveEventControl());
+
+		// Board
+		menu.put("/boardList.do", new BoardListControl());
+		menu.put("/boardDetail.do", new BoardDetailControl());
 	}
 
 	@Override
