@@ -7,4 +7,5 @@ import com.yedam.board.vo.BoardVO;
 public interface BoardService {
 	public List<BoardVO> boardList(int page);
 	public int totalCnt();
+	public BoardVO detailBoard(long brdNo);
 }

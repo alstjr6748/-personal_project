@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.yedam.board.control.BoardDetailControl;
 import com.yedam.board.control.BoardListControl;
+import com.yedam.board.control.addReplyControl;
+import com.yedam.board.control.delReplyControl;
+import com.yedam.board.control.editReplyControl;
+import com.yedam.board.control.getReplyControl;
+import com.yedam.board.control.replyListControl;
 import com.yedam.calendar.control.AddEventControl;
 import com.yedam.calendar.control.EventForm;
 import com.yedam.calendar.control.EventListControl;
@@ -22,10 +27,14 @@ import com.yedam.member.control.ChartDataControl;
 import com.yedam.member.control.ChartFormControl;
 import com.yedam.member.control.LoginControl;
 import com.yedam.member.control.LoginFormControl;
+import com.yedam.member.control.MemberAddControl;
 import com.yedam.member.control.MemberInfoControl;
 import com.yedam.member.control.MemberListControl;
+import com.yedam.member.control.MemberListJquery;
+import com.yedam.member.control.MemberListJson;
 import com.yedam.member.control.MemberModifyControl;
 import com.yedam.member.control.imageUploadControl;
+import com.yedam.member.control.memberInfoJson;
 
 public class FrontController extends HttpServlet {
 	private HashMap<String, Control> menu;
@@ -45,6 +54,11 @@ public class FrontController extends HttpServlet {
 		menu.put("/memberModify.do", new MemberModifyControl());
 		menu.put("/imageUpload.do", new imageUploadControl());
 
+		menu.put("/memberListJquery.do", new MemberListJquery());
+		menu.put("/memberListJson.do", new MemberListJson());
+		menu.put("/memberAdd.do", new MemberAddControl());
+		menu.put("/memberInfoJson.do", new memberInfoJson());
+
 		// chart
 		menu.put("/chartForm.do", new ChartFormControl());
 		menu.put("/chartData.do", new ChartDataControl());
@@ -59,6 +73,13 @@ public class FrontController extends HttpServlet {
 		// Board
 		menu.put("/boardList.do", new BoardListControl());
 		menu.put("/boardDetail.do", new BoardDetailControl());
+
+		// Reply
+		menu.put("/replyList.do", new replyListControl());
+		menu.put("/getReply.do", new getReplyControl());
+		menu.put("/addReply.do", new addReplyControl());
+		menu.put("/editReply.do", new editReplyControl());
+		menu.put("/delReply.do", new delReplyControl());
 	}
 
 	@Override

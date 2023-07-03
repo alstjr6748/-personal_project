@@ -4,30 +4,29 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.yedam.calendar.dao.CalendarMapper;
-import com.yedam.calendar.vo.CalendarVO;
+import com.yedam.board.dao.ReplyMapper;
+import com.yedam.board.vo.ReplyVO;
 
 public class TestMain {
 
 	public static void main(String[] args) {
-		SqlSession session = DataSource.getInstance().openSession();
-		CalendarMapper mapper = session.getMapper(CalendarMapper.class);
+		SqlSession session = DataSource.getInstance().openSession(true);
+		ReplyMapper mapper = session.getMapper(ReplyMapper.class);
 
-		// title: "해외여행가기", 2023-06-30, 2023-07-05
-		CalendarVO vo = new CalendarVO();
-		vo.setTitle("해외여행가기");
+		ReplyVO reply = new ReplyVO();
+		reply.setBrdNo(790);
+//		reply.setReply("댓글댓글대슥ㄹffff수정");
+//		reply.setReplyer("user0000");
+//		reply.setReplyNo(6);
 
-//		vo.setStartDate("2023-06-30");
-//		vo.setEndDate("2023-07-05");
+		//mapper.insertReply(reply);
+		//mapper.updateReply(reply);
+		mapper.deleteReply(6);
+		//List<ReplyVO> list = mapper.selectList(790);
 
-//		mapper.insert(vo);
-		mapper.delete(vo);
-
-		List<CalendarVO> list = mapper.getList();
-		for(CalendarVO cal : list) {
-			System.out.println(cal);
-		}
-
+		/*
+		 * for(ReplyVO vo : list) { System.out.println(vo.toString()); }
+		 */
 	}
 
 }

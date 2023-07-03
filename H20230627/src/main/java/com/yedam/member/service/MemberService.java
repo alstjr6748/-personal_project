@@ -12,4 +12,5 @@ public interface MemberService {
 	public MemberVO select(String id);
 	public boolean modifyMember(MemberVO vo);
 	public boolean modifyImage(MemberVO vo);
+	public boolean addMember(MemberVO vo);
 }

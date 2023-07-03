@@ -12,27 +12,28 @@
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="resources/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="bootSimple/css/styles.css" rel="stylesheet" />
     </head>
     <body>
         <div class="d-flex" id="wrapper">
-        
+
             <!-- Sidebar-->
             <tiles:insertAttribute name="menu" />
-            
+
             <!-- Page content wrapper-->
             <div id="page-content-wrapper">
-            
+
                 <!-- Top navigation-->
                 <tiles:insertAttribute name="header" />
-                
+
                 <!-- Page content-->
                 <tiles:insertAttribute name="body" />
-                
+
             </div>
         </div>
-        
+
         <tiles:insertAttribute name="footer" />
-        
+
     </body>
 </html>

@@ -41,7 +41,7 @@
     <tbody>
         <c:forEach var="list" items="${list }">
         	<tr>
-                <td><a href="getBoard.do?bno=${list.brdNo }">${list.brdNo }</a></td>
+                <td><a href="boardDetail.do?bno=${list.brdNo }">${list.brdNo }</a></td>
                 <td>${list.brdTitle }</td>
                 <td>${list.brdWriter }</td>
                 <td>${list.createDate }</td>
@@ -50,28 +50,30 @@
         </c:forEach>
     </tbody>
 </table>
+<hr>
 <br>
-<div class="center">
-		<div class="pagination">
-			<!-- 이전페이지 -->
-			<c:if test="${page.prev }">
-			<a href="boardList.do?page=${page.startPage - 1 }"> prev </a>
-			</c:if>
-			<!-- 현재페이지 -->
-			<c:forEach begin="${page.startPage }" end="${page.endPage }" var="i">
-				<c:choose>
-					<c:when test="${i == curPage }">
-						<a href="boardList.do?page=${i }" class="active"><c:out value="${i }"></c:out></a>
-					</c:when>
-					<c:otherwise>
-						<a href="boardList.do?page=${i }"><c:out value="${i }"></c:out></a>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			<!-- 다음페이지 -->
-			<c:if test="${page.next }">
-				<a href="boardList.do?page=${page.endPage + 1 }"> next </a>
-			</c:if>
 
-		</div>
+<div class="center">
+	<div class="pagination">
+		<!-- 이전페이지 -->
+		<c:if test="${page.prev }">
+		<a href="boardList.do?page=${page.startPage - 1 }"> prev </a>
+		</c:if>
+		<!-- 현재페이지 -->
+		<c:forEach begin="${page.startPage }" end="${page.endPage }" var="i">
+			<c:choose>
+				<c:when test="${i == curPage }">
+					<a href="boardList.do?page=${i }" class="active"><c:out value="${i }"></c:out></a>
+				</c:when>
+				<c:otherwise>
+					<a href="boardList.do?page=${i }"><c:out value="${i }"></c:out></a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<!-- 다음페이지 -->
+		<c:if test="${page.next }">
+			<a href="boardList.do?page=${page.endPage + 1 }"> next </a>
+		</c:if>
+
 	</div>
+</div>

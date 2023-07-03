@@ -22,4 +22,9 @@
 	<select id="selectCount" resultType="int">
 		select count(1) from tbl_board
 	</select>
+	<select id="selectBoard" parameterType="Board">
+		select *
+		from tbl_board
+		where brd_no = #{brd_no}
+	</select>
 </mapper>

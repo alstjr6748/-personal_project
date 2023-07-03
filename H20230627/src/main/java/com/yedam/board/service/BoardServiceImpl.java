@@ -22,4 +22,9 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.selectCount();
 	}
 
+	@Override
+	public BoardVO detailBoard(long brdNo) {
+		return mapper.selectBoard(brdNo);
+	}
+
 }
