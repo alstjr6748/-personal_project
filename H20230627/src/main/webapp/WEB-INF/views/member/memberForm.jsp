@@ -16,7 +16,7 @@
 	}
 	today.timeFormat();
 	console.log(today.timeFormat());
-	
+
 	$(document).ready(function(){
 		$.ajax({
 			url: 'memberListJson.do',
@@ -29,7 +29,9 @@
 						                      ,$('<td />').text(new Date(item.userBirth).timeFormat())
 									          ,$('<td />').text(item.userPhone)
 									          ,$('<td />').append($('<img>').attr('src', 'images/' + item.userImg).attr('width', '25px'))
+											  ,$('<td />').append($('<button />').text('삭제').on('click', delMemberFnc))
 					)
+					tr.data('id', item.userId);
 					tr.on('click', modifyFnc);
 					$('#list').append(tr);
 				});
@@ -91,6 +93,59 @@
 				}
 			})
 		}
+
+		// 수정버튼 클릭 시
+		$('#modBtn').on('click', editForm);
+
+		function editForm(e){
+			$.ajax({
+				url: 'memberEditJson.do',
+				method: 'post',
+				data: {
+					id: $('#uid').val(),
+					pw: $('#upw').val(),
+					ph: $('#uphone').val(),
+					ad: $('#uaddr').val()
+				},
+				success: function(result){
+					// result.userId 
+					//console.log(result);
+					//console.log($('#list tr'));
+					$('#list tr').each(function(idx, item){
+						//console.log(idx, item);
+						if($(item).children().eq(0).text() == result.userId) {
+							$(item).children().eq(3).text(result.userPhone);
+						}
+					})
+				},
+				error: function(err){
+					console.log(err);
+				}
+			})
+		}
+		// 삭제버튼 클릭
+		function delMemberFnc(e){
+			e.stopPropagation();	// 이벤트 전파 차단
+			//data-id -> dataset.id
+			console.log($(this).parent().parent().data('id'));
+			let targetId = $(this).parent().parent().data('id');
+			let targetTr = $(this).parent().parent();
+			$.ajax({
+				url : 'memberDelJson.do',
+				method : 'post',
+				data : {
+					id : targetId
+				},
+				success : function(result){
+					if(result.retCode == 'Success'){
+						targetTr.remove();
+					}
+				},
+				error : function(err){
+					console.log(err);
+				}
+			})
+		}
 	})
 </script>
 
@@ -127,7 +182,7 @@
 			<td colspan="2" align="center">
 				<input type="submit" value="등록">
 				<input type="reset" value="초기화">
-				<input type="button" value="변경">
+				<button type="button" id="modBtn">변경</button>
 			</td>
 		</tr>
 	</table>
