@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.dao.ProductMapper">
+	<select id="selectAllList">
+		select *
+		from tbl_product
+	</select>
+	<select id="selectOne" parameterType="Product">
+		select *
+		from tbl_product
+		where prod_code = #{prod_code}
+	</select>
+	<select id="selectLikeList">
+	<![CDATA[
+		select ROWNUM, a.*
+		from (
+        	select *
+        	from tbl_product
+        	order by like_it desc
+        )a
+		where ROWNUM <= 4
+	]]>
+	</select>
+</mapper>
